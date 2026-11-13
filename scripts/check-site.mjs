@@ -1,5 +1,5 @@
 // Valida o site estático: links/assets locais existem, SEO básico presente.
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 
 const root = process.cwd();
@@ -20,6 +20,16 @@ for (const page of pages) {
   }
 }
 for (const f of ['sitemap.xml', 'robots.txt', 'vercel.json']) if (!existsSync(join(root, f))) errors.push(`arquivo ausente: ${f}`);
+
+// Vídeo do scrub: peso por versão e poster (critérios 1 e 12 da spec)
+const budgets = { 'scrub-produtos-1080.mp4': 4e6, 'scrub-produtos-720.mp4': 2.5e6, 'scrub-produtos-480.mp4': 2e6 };
+for (const [f, max] of Object.entries(budgets)) {
+  const p = join(root, 'assets/video', f);
+  if (!existsSync(p)) errors.push(`vídeo ausente: assets/video/${f}`);
+  else if (statSync(p).size > max) errors.push(`vídeo acima do limite (${max / 1e6} MB): ${f}`);
+}
+const idx = readFileSync(join(root, 'index.html'), 'utf8');
+if (/<video[^>]*id="scrub-video"/.test(idx) && !/id="scrub-video"[^>]*poster=/.test(idx)) errors.push('index.html: #scrub-video sem poster');
 
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

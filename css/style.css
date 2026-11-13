@@ -509,3 +509,43 @@ button { font-family: inherit; cursor: pointer; }
   text-transform: uppercase;
 }
 .plan-badge::before { content: "✔"; }
+
+/* ===== Seção scrub (vídeo controlado pela rolagem) =====
+   CSS base = plano B: seção estática, vídeo no poster, textos empilhados.
+   O JS só adiciona .is-scrub quando tudo carregou e não há movimento reduzido. */
+:root { --header-h: 72px; }
+.scrub { background: var(--bg-2); padding: 72px 0; }
+.scrub-stage { max-width: var(--container-w); margin: 0 auto; padding: 0 24px; display: grid; gap: 32px; }
+.scrub-media { order: -1; }
+.scrub-media video {
+  display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover;
+  border: 1px solid var(--border-soft); border-radius: var(--radius); background: #EFE5C6;
+}
+.scrub-copy { display: grid; gap: 28px; align-content: start; }
+.scrub-block h2 { font-size: clamp(1.9rem, 4.2vw, 3.2rem); line-height: 1.1; font-weight: 600; margin-bottom: 10px; }
+.scrub-block p { font-size: 1.05rem; max-width: 34ch; }
+.scrub-cta { justify-self: start; }
+
+@media (min-width: 900px) {
+  .scrub-stage { grid-template-columns: 5fr 7fr; gap: 48px; align-items: end; }
+  .scrub-media { order: 0; }
+}
+
+/* Modo scrub ativo */
+.scrub.is-scrub { padding: 0; height: calc(100svh - var(--header-h) + 200vh); }
+.scrub.is-scrub .scrub-stage {
+  position: sticky; top: var(--header-h);
+  height: calc(100svh - var(--header-h)); align-content: center; align-items: center;
+}
+.scrub.is-scrub .scrub-copy { position: relative; min-height: 15rem; align-content: end; }
+.scrub.is-scrub .scrub-block { position: absolute; left: 0; right: 0; bottom: 4.5rem; opacity: 0; transition: opacity .12s ease; }
+.scrub.is-scrub .scrub-block.is-on { opacity: 1; transition: opacity .25s ease .14s; }
+.scrub.is-scrub .scrub-cta { position: absolute; left: 0; bottom: 0; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
+.scrub.is-scrub .scrub-cta.is-on { opacity: 1; pointer-events: auto; }
+@media (max-width: 899px) {
+  .scrub.is-scrub .scrub-stage { grid-template-rows: auto 1fr; align-content: start; padding-top: 16px; gap: 20px; }
+  .scrub.is-scrub .scrub-media video { aspect-ratio: 4 / 3; }
+  .scrub.is-scrub .scrub-copy { min-height: 0; height: 100%; }
+}
+/* O botão da mascote não cobre o CTA enquanto a seção está na tela */
+body.scrub-active .fab { opacity: 0; pointer-events: none; transition: opacity .2s ease; }

@@ -44,18 +44,29 @@
   </header>
 
   <main>
-    <section class="hero-video">
-      <video id="hero-video" autoplay muted playsinline loop>
-        <source src="assets/video/hero-golden-campo.mp4" type="video/mp4">
-      </video>
-      <div class="scrim"></div>
-      <div class="container">
-        <span class="badge">Seu pet tratado como família</span>
-        <h1>Cuidado de verdade,<br><em>confiança</em> desde o primeiro banho.</h1>
-        <p class="lead">Banho, tosa, clínica veterinária e todo tipo de produto. A melhor qualidade, preços competitivos e o atendimento que seu pet merece.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="https://wa.me/553134683299?text=Ol%C3%A1%2C%20quero%20agendar%20um%20hor%C3%A1rio!" target="_blank" rel="noopener">Agendar no WhatsApp</a>
-          <a class="btn btn-secondary" href="servicos.html">// Conhecer Serviços</a>
+    <section class="scrub scrub-hero" id="scrub" aria-labelledby="hero-title">
+      <div class="scrub-stage">
+        <div class="scrub-copy">
+          <span class="badge">Seu pet tratado como família</span>
+          <h1 id="hero-title">Cuidado de verdade,<br><em>confiança</em> desde o primeiro banho.</h1>
+          <p class="lead">Banho, tosa, clínica veterinária e todo tipo de produto. Desde 1998 cuidando dos pets de Belo Horizonte.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://wa.me/553134683299?text=Ol%C3%A1%2C%20quero%20agendar%20um%20hor%C3%A1rio!" target="_blank" rel="noopener">Agendar no WhatsApp</a>
+            <a class="btn btn-outline-dark" href="https://wa.me/553134683299?text=Ol%C3%A1%2C%20quero%20pedir%20produtos%20para%20o%20meu%20pet." target="_blank" rel="noopener">Pedir produtos</a>
+          </div>
+          <ul class="scrub-points" aria-label="O que você encontra na Point Dog">
+            <li data-from="0" data-to="0.34">Ração, brinquedos e coleiras.</li>
+            <li data-from="0.34" data-to="0.67">Farmácia e acessórios também.</li>
+            <li data-from="0.67" data-to="1.01">Nas 4 unidades: Horto, Pitangui, São Roque e Formosa.</li>
+          </ul>
+        </div>
+        <div class="scrub-media">
+          <video id="scrub-video" muted playsinline preload="metadata" poster="assets/img/scrub-produtos-poster.jpg"
+            width="1920" height="1080"
+            data-src-lg="assets/video/scrub-produtos-720.mp4"
+            data-src-md="assets/video/scrub-produtos-720.mp4"
+            data-src-sm="assets/video/scrub-produtos-480.mp4"
+            aria-label="Ração, bola de tênis, osso de borracha e coleira flutuando"></video>
         </div>
       </div>
     </section>
@@ -91,34 +102,6 @@
             <p>A melhor seleção de produtos da cidade. Rações super premium, farmácia completa, brinquedos importados e acessórios exclusivos.</p>
             <a class="card-link" href="servicos.html">Saiba mais →</a>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scrub" id="scrub" aria-labelledby="scrub-t1">
-      <div class="scrub-stage">
-        <div class="scrub-copy">
-          <div class="scrub-block" data-from="0" data-to="0.34">
-            <h2 id="scrub-t1">Ração, brinquedos, coleiras.</h2>
-            <p>O que seu cachorro usa todo dia, reunido num pet shop de bairro.</p>
-          </div>
-          <div class="scrub-block" data-from="0.34" data-to="0.7">
-            <h2>Farmácia e acessórios também.</h2>
-            <p>Nas 4 unidades: Horto, Pitangui, São Roque e Formosa. A Unidade Horto é a completa.</p>
-          </div>
-          <div class="scrub-block" data-from="0.7" data-to="1.01">
-            <h2>Desde 1998, na mesma esquina do Horto.</h2>
-            <p>Chame no WhatsApp e diga o que precisa.</p>
-          </div>
-          <a class="btn btn-primary scrub-cta" href="https://wa.me/553134683299?text=Ol%C3%A1%2C%20quero%20pedir%20produtos%20para%20o%20meu%20pet." target="_blank" rel="noopener">Pedir produtos no WhatsApp</a>
-        </div>
-        <div class="scrub-media">
-          <video id="scrub-video" muted playsinline preload="metadata" poster="assets/img/scrub-produtos-poster.jpg"
-            width="1920" height="1080"
-            data-src-lg="assets/video/scrub-produtos-1080.mp4"
-            data-src-md="assets/video/scrub-produtos-720.mp4"
-            data-src-sm="assets/video/scrub-produtos-480.mp4"
-            aria-label="Ração, bola de tênis, osso de borracha e coleira flutuando"></video>
         </div>
       </div>
     </section>

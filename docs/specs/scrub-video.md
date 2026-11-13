@@ -51,6 +51,9 @@ Conteúdo e qualidade
 6. PR pequeno, CI verde, prévia da Vercel aprovada pelo dono, merge.
 
 ## Decisões do dono
+- Local: o vídeo é o próprio hero da Home (texto à esquerda, vídeo à direita), preso ~1 tela. Substitui a "seção entre o hero e Por que a Point Dog" descrita acima.
+- Qualidade: 1080p (2,9 MB) em telas ≥1200 px, 720p (1,3 MB) de 700 a 1199 px e 480p (0,75 MB) no celular. O critério 1 vale como "≤ 4 MB" por arquivo.
+- Critério 4: vale também para a página inteira; o desfoque do cabeçalho foi removido.
 - Vídeo: "produtos flutuando" (osso, bolas de tênis, coleira, tigela com ração, sem marca), gerado por IA, 3,9 s / 94 quadros. Os outros 3 vídeos de teste foram descartados.
 - Seção curta, ~2 telas de rolagem, para os 94 quadros ficarem fluidos.
 - Arquivos recodificados (sem áudio, todos os quadros-chave): `assets/video/scrub-produtos-720.mp4` (1,4 MB) e `-480.mp4` (0,77 MB) + poster `assets/img/scrub-produtos-poster.jpg`.

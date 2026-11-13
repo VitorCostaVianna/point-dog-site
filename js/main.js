@@ -28,4 +28,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  const heroVideo = document.getElementById("hero-video");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (heroVideo) {
+    heroVideo.addEventListener("playing", () => heroVideo.classList.add("is-ready"), { once: true });
+    if (reducedMotion) {
+      heroVideo.removeAttribute("autoplay");
+      heroVideo.pause();
+      heroVideo.addEventListener("loadeddata", () => heroVideo.classList.add("is-ready"), { once: true });
+    } else {
+      heroVideo.play().catch(() => {});
+    }
+  }
 });

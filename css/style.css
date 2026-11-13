@@ -509,3 +509,8 @@ button { font-family: inherit; cursor: pointer; }
   text-transform: uppercase;
 }
 .plan-badge::before { content: "✔"; }
+
+/* ===== Scroll animations (GSAP) — só quando as libs carregam ===== */
+.gsap-on .reveal { opacity: 1; transform: none; transition: none; }
+.gsap-on .panel-frame.has-photo { will-change: transform; transform-style: preserve-3d; }
+.gsap-on .panel-frame.has-photo:hover .panel-photo { transform: none; }

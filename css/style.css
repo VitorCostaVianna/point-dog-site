@@ -17,9 +17,9 @@
   --radius: 14px;
   --radius-sm: 16px;
   --radius-pill: 999px;
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Space Grotesk", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-body); /* sem monoespaçada: alias mantido só para as regras existentes */
   --shadow-glow-orange: 0 10px 28px rgba(242, 118, 43, 0.28);
   --container-w: 1200px;
 }
@@ -95,9 +95,8 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 0.82rem;
-  letter-spacing: 0.02em;
 }
-.btn-secondary:hover { border-color: var(--green-glow); }
+.btn-secondary:hover { border-color: var(--orange); }
 .btn-outline-dark {
   background: transparent;
   border-color: var(--border-soft);
@@ -117,25 +116,14 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--green-glow);
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   font-weight: 500;
-}
-.badge::before {
-  content: "";
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
 }
 .eyebrow {
   display: block;
   color: var(--gold);
   font-family: var(--font-mono);
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   margin-bottom: 12px;
 }
 
@@ -150,16 +138,6 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: var(--shadow-card);
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
-.card::after {
-  content: "";
-  position: absolute;
-  top: 16px; right: 16px;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 6px var(--green);
-  opacity: 0.75;
-}
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--orange);
@@ -168,9 +146,7 @@ button { font-family: inherit; cursor: pointer; }
 .card-tag {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--gold);
   margin-bottom: 12px;
 }
@@ -198,7 +174,7 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 2;
 }
 .card-icon-badge--gold { background: rgba(168, 114, 15, 0.12); }
-.card-icon-badge--green { background: rgba(30, 158, 82, 0.12); }
+.card-icon-badge--green { background: rgba(34, 26, 20, 0.07); }
 .card-icon-ghost {
   position: absolute;
   top: -18px;
@@ -242,8 +218,6 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--text);
   font-weight: 500;
   font-size: 0.82rem;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
   opacity: 0.75;
   transition: opacity 0.2s, color 0.2s;
 }
@@ -291,9 +265,7 @@ button { font-family: inherit; cursor: pointer; }
 .footer-grid h4 {
   color: var(--gold);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   margin-bottom: 16px;
 }
 .footer-grid ul li { margin-bottom: 10px; color: var(--text-muted); font-size: 0.92rem; }
@@ -306,47 +278,11 @@ button { font-family: inherit; cursor: pointer; }
   text-align: center;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
 }
 @media (max-width: 700px) {
   .footer-grid { grid-template-columns: 1fr; }
 }
-
-/* ===== Hero (video) ===== */
-.hero-video {
-  position: relative;
-  overflow: hidden;
-  min-height: 560px;
-  display: flex;
-  align-items: flex-end;
-  background: linear-gradient(160deg, #3a2c1c 0%, #221a14 100%);
-}
-.hero-video video {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.8s ease;
-}
-.hero-video video.is-ready {
-  opacity: 1;
-}
-.hero-video .scrim {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(34,26,20,.1) 0%, rgba(34,26,20,.34) 60%, rgba(34,26,20,.72) 100%),
-    linear-gradient(90deg, rgba(34,26,20,.62) 0%, rgba(34,26,20,.05) 62%);
-}
-.hero-video .container { position: relative; z-index: 1; padding-bottom: 64px; padding-top: 64px; }
-.hero-video h1 { font-size: clamp(2.2rem, 4.4vw, 3.2rem); color: var(--text-on-dark); text-shadow: 0 2px 24px rgba(13,10,6,.55), 0 1px 3px rgba(13,10,6,.6); max-width: 14ch; }
-.hero-video h1 em { color: var(--orange-light); font-style: italic; font-weight: 500; }
-.hero-video p.lead { font-size: 1.05rem; color: rgba(247,245,240,.92); text-shadow: 0 1px 12px rgba(13,10,6,.55); max-width: 520px; margin-bottom: 28px; }
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-.hero-video .badge { background: rgba(0,217,139,.1); border-color: rgba(0,217,139,.45); color: #00D98B; }
-.hero-video .btn-secondary { border-color: rgba(247,245,240,.4); color: var(--text-on-dark); }
-.hero-video .btn-secondary:hover { border-color: #00D98B; }
 
 /* ===== Simple hero (inner pages, no video) ===== */
 .hero-simple {
@@ -358,7 +294,7 @@ button { font-family: inherit; cursor: pointer; }
     linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 .hero-simple h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
-.hero-simple h1 em { color: var(--orange); font-style: italic; font-weight: 500; }
+.hero-simple h1 em { color: var(--orange); font-style: normal; }
 .hero-simple .lead { color: var(--text-muted); font-size: 1.05rem; }
 
 .pull-quote {
@@ -404,7 +340,6 @@ button { font-family: inherit; cursor: pointer; }
   border-radius: var(--radius);
   background:
     radial-gradient(circle at 25% 15%, rgba(242,118,43,.16), transparent 55%),
-    radial-gradient(circle at 75% 85%, rgba(34,197,94,.14), transparent 55%),
     var(--bg-2);
   border: 1px solid var(--border-soft);
   display: grid;
@@ -422,9 +357,7 @@ button { font-family: inherit; cursor: pointer; }
   position: absolute;
   top: 14px; left: 18px;
   font-family: var(--font-mono);
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--gold);
   opacity: 0.85;
   z-index: 2;
@@ -477,8 +410,7 @@ button { font-family: inherit; cursor: pointer; }
 .fab:hover { border-color: var(--orange); transform: translateY(-2px); }
 .fab span {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.02em;
+  font-size: 0.85rem;
   color: var(--text);
 }
 .fab svg { width: 38px; height: 38px; flex-shrink: 0; }
@@ -501,10 +433,8 @@ button { font-family: inherit; cursor: pointer; }
   border: 1px solid rgba(242,118,43,.45);
   color: #B24A0E;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 .plan-badge::before { content: "✔"; }
 
@@ -569,3 +499,11 @@ html:has(.scrub.is-scrub) { scroll-behavior: auto; }
   .scrub.is-scrub .scrub-copy { padding-top: 14px; padding-bottom: 14px; }
   .scrub.is-scrub .scrub-copy .lead { display: none; }
 }
+
+/* ===== Identidade tipográfica: Bricolage Grotesque (títulos) + Figtree (texto) ===== */
+h1, h2, h3, h4 { letter-spacing: -0.015em; }
+h1 { font-weight: 800; }
+h2 { font-weight: 700; }
+h3, h4 { font-weight: 700; }
+em { font-style: normal; }
+.scrub-copy h1 { max-width: 15ch; }

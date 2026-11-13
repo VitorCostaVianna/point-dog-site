@@ -37,6 +37,12 @@
     const next = section.nextElementSibling;
     if (next) next.classList.add("scrub-curtain");
 
+    const points = [...section.querySelectorAll(".scrub-points li")];
+    function setPoints(p) {
+      points.forEach((li) => li.classList.toggle("is-on", p >= +li.dataset.from && p < +li.dataset.to));
+    }
+    setPoints(0);
+
     let target = 0, current = 0, shown = -1;
     const dur = video.duration;
 
@@ -45,7 +51,7 @@
       trigger: section,
       start: "top top+=72",
       end: () => "+=" + window.innerHeight,
-      onUpdate: (self) => { target = self.progress; },
+      onUpdate: (self) => { target = self.progress; setPoints(target); },
     });
 
     // Aproxima o quadro atual do alvo, sem inundar o vídeo de buscas

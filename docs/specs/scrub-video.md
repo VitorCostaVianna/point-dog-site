@@ -1,6 +1,6 @@
 # Spec: vídeo "scrubbing" na Home
 
-Status: rascunho para aprovação do dono. Nenhum código de produção até aprovar.
+Status: aprovado pelo dono (2026-11-13) com as decisões abaixo.
 
 ## Decisão de direção
 A animação principal do site é um **vídeo controlado pela rolagem** (scrubbing): conforme a pessoa rola, o vídeo avança ou volta. Efeito premium com custo baixo no celular, porque é um vídeo comum, sem 3D em tempo real.
@@ -50,7 +50,8 @@ Conteúdo e qualidade
 5. **QA/Revisor (contexto limpo):** roda os critérios 1 a 12, em desktop e 375 px, com e sem movimento reduzido, e relata números.
 6. PR pequeno, CI verde, prévia da Vercel aprovada pelo dono, merge.
 
-## Perguntas em aberto
-- Qual vídeo usar: `hero-banho-tosa.mp4`, outro já existente, ou um novo de filmagem real?
-- Duração e tema: 5 a 8 segundos mostrando o banho, o atendimento ou a fachada?
-- Você testa no PC, no celular ou nos dois? (define onde medimos o critério 2)
+## Decisões do dono
+- Vídeo: "produtos flutuando" (osso, bolas de tênis, coleira, tigela com ração, sem marca), gerado por IA, 3,9 s / 94 quadros. Os outros 3 vídeos de teste foram descartados.
+- Seção curta, ~2 telas de rolagem, para os 94 quadros ficarem fluidos.
+- Arquivos recodificados (sem áudio, todos os quadros-chave): `assets/video/scrub-produtos-720.mp4` (1,4 MB) e `-480.mp4` (0,77 MB) + poster `assets/img/scrub-produtos-poster.jpg`.
+- O vídeo é gerado por IA, mas só mostra objetos genéricos; o critério 9 vale como "aprovado pelo dono" (feito).

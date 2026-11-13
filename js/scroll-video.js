@@ -50,7 +50,7 @@
     ScrollTrigger.create({
       trigger: section,
       start: "top top+=72",
-      end: () => "+=" + window.innerHeight,
+      end: () => "+=" + window.innerHeight * 1.5,
       onUpdate: (self) => { target = self.progress; setPoints(target); },
     });
 
@@ -58,7 +58,9 @@
     gsap.ticker.add(() => {
       current += (target - current) * 0.25;
       if (Math.abs(target - current) < 0.0005) current = target;
-      const t = Math.min(current * dur, dur - 0.04);
+      // ida e volta: 0→1 avança o vídeo até o fim e volta ao começo (dobra a duração percebida)
+      const pp = current < 0.5 ? current * 2 : (1 - current) * 2;
+      const t = Math.min(pp * dur, dur - 0.04);
       if (!video.seeking && Math.abs(t - shown) > 0.02) { video.currentTime = t; shown = t; }
     });
 

@@ -1,4 +1,4 @@
-// Animações ligadas à rolagem (GSAP + ScrollTrigger + Lenis).
+// Animações ligadas à rolagem (GSAP + ScrollTrigger).
 // Melhoria progressiva: se as libs não carregarem ou o usuário preferir menos
 // movimento, o site segue com o comportamento original (.reveal via main.js).
 (function () {
@@ -8,14 +8,6 @@
   const { gsap, ScrollTrigger } = window;
   gsap.registerPlugin(ScrollTrigger);
   document.documentElement.classList.add("gsap-on");
-
-  // Rolagem suave, sincronizada com o ScrollTrigger
-  if (window.Lenis) {
-    const lenis = new window.Lenis({ duration: 1.1, smoothWheel: true });
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((t) => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  }
 
   const mm = gsap.matchMedia();
 
@@ -35,7 +27,7 @@
     gsap.utils.toArray(".panel-frame.has-photo").forEach((frame) => {
       gsap.fromTo(frame, { rotationY: -9, y: 40 }, {
         rotationY: 0, y: 0, ease: "none", transformPerspective: 1200,
-        scrollTrigger: { trigger: frame, start: "top 95%", end: "center 55%", scrub: 0.6 },
+        scrollTrigger: { trigger: frame, start: "top 95%", end: "center 55%", scrub: 0.3 },
       });
     });
   });
@@ -52,7 +44,6 @@
   const hero = document.querySelector(".hero-video");
   if (hero) {
     const st = { trigger: hero, start: "top top", end: "bottom top", scrub: true };
-    gsap.fromTo(hero.querySelector("video"), { scale: 1.2, yPercent: 0 }, { scale: 1.2, yPercent: 9, ease: "none", scrollTrigger: st });
     gsap.to(hero.querySelector(".container"), { yPercent: -12, opacity: 0.15, ease: "none", scrollTrigger: st });
     gsap.from(hero.querySelectorAll(".badge, h1, .lead, .hero-actions"), {
       y: 36, opacity: 0, duration: 0.9, stagger: 0.12, ease: "power3.out", delay: 0.15,

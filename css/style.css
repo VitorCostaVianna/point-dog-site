@@ -215,8 +215,7 @@ button { font-family: inherit; cursor: pointer; }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.97);
   border-bottom: 1px solid var(--border-soft);
 }
 .site-header .container {
@@ -512,5 +511,6 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ===== Scroll animations (GSAP) — só quando as libs carregam ===== */
 .gsap-on .reveal { opacity: 1; transform: none; transition: none; }
-.gsap-on .panel-frame.has-photo { will-change: transform; transform-style: preserve-3d; }
+.gsap-on .panel-frame.has-photo { will-change: transform; }
+.gsap-on .panel-frame.has-photo .panel-photo { will-change: transform; }
 .gsap-on .panel-frame.has-photo:hover .panel-photo { transform: none; }

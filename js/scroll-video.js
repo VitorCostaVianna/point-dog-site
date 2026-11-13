@@ -49,7 +49,7 @@
 
     ScrollTrigger.create({
       trigger: section,
-      start: "top top+=72",
+      start: "top top+=85",
       end: () => "+=" + window.innerHeight,
       onUpdate: (self) => { target = self.progress; setPoints(target); },
     });

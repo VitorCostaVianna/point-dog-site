@@ -6,10 +6,10 @@
   --text-muted: #6E6259;
   --orange: #F2762B;
   --orange-light: #FF8A3D;
-  --orange-deep: #C85F1E;
+  --orange-deep: #B04C0D; /* laranja para TEXTO: >= 5:1 no branco e >= 4,6:1 no creme */
   --green: #1E9E52;
   --green-glow: #12804A;
-  --gold: #A8720F;
+  --gold: #7F5200; /* âmbar para texto: >= 6:1 no branco e >= 5,5:1 no creme */
   --border-soft: rgba(34, 26, 20, 0.12);
   --text-on-dark: #F7F5F0;
   --scrim: #0D1210;
@@ -294,7 +294,7 @@ button { font-family: inherit; cursor: pointer; }
     linear-gradient(160deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 .hero-simple h1 { font-size: clamp(2rem, 4vw, 2.8rem); }
-.hero-simple h1 em { color: var(--orange); font-style: normal; }
+.hero-simple h1 em { color: var(--orange-deep); font-style: normal; }
 .hero-simple .lead { color: var(--text-muted); font-size: 1.05rem; }
 
 .pull-quote {
@@ -431,7 +431,7 @@ button { font-family: inherit; cursor: pointer; }
   border-radius: var(--radius-pill);
   background: rgba(242,118,43,.10);
   border: 1px solid rgba(242,118,43,.45);
-  color: #B24A0E;
+  color: #A3430C;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 600;
@@ -441,7 +441,7 @@ button { font-family: inherit; cursor: pointer; }
 /* ===== Hero com vídeo controlado pela rolagem (scrub) =====
    Vídeo de fundo (sangria total) + texto por cima. Plano B = hero estático (poster).
    O JS adiciona .is-scrub (pin) e .scrub-curtain na seção seguinte (efeito cortina). */
-:root { --header-h: 72px; }
+:root { --header-h: 85px; }
 .scrub { background: #EFE5C6; padding: 0; }
 .scrub-stage { position: relative; min-height: calc(100svh - var(--header-h)); min-height: max(560px, calc(100svh - var(--header-h))); display: flex; align-items: center; overflow: hidden; }
 .scrub-media { position: absolute; inset: 0; }

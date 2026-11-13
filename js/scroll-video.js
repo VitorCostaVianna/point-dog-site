@@ -26,31 +26,22 @@
   }
 
   function fallback() {
-    document.body.classList.remove("scrub-active");
     section.classList.remove("is-scrub");
   }
 
   function activate() {
     const { gsap, ScrollTrigger } = window;
-    const blocks = [...section.querySelectorAll(".scrub-block")];
-    const cta = section.querySelector(".scrub-cta");
     section.classList.add("is-scrub");
 
     let target = 0, current = 0, shown = -1;
     const dur = video.duration;
 
-    function setText(p) {
-      blocks.forEach((b) => b.classList.toggle("is-on", p >= +b.dataset.from && p < +b.dataset.to));
-      cta.classList.toggle("is-on", p >= 0.85);
-    }
-    setText(0);
 
     ScrollTrigger.create({
       trigger: section,
       start: "top top+=72",
       end: "bottom bottom",
-      onUpdate: (self) => { target = self.progress; setText(target); },
-      onToggle: (self) => document.body.classList.toggle("scrub-active", self.isActive),
+      onUpdate: (self) => { target = self.progress; },
     });
 
     // Aproxima o quadro atual do alvo, sem inundar o vídeo de buscas

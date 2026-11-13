@@ -50,7 +50,7 @@
     ScrollTrigger.create({
       trigger: section,
       start: "top top+=85",
-      end: () => "+=" + window.innerHeight,
+      end: () => "+=" + window.innerHeight * 1.5,
       onUpdate: (self) => { target = self.progress; setPoints(target); },
     });
 

@@ -456,7 +456,7 @@ button { font-family: inherit; cursor: pointer; }
 .scrub .btn-outline-dark { background: rgba(255,255,255,.7); }
 
 /* Modo scrub: prende o hero durante 1 tela de vídeo; depois a próxima seção sobe como cortina */
-.scrub.is-scrub { height: calc(2 * (100svh - var(--header-h)) + 100vh); }
+.scrub.is-scrub { height: calc(2 * (100svh - var(--header-h)) + 150vh); }
 .scrub.is-scrub .scrub-stage { position: sticky; top: var(--header-h); height: calc(100svh - var(--header-h)); min-height: 0; }
 .scrub-curtain {
   position: relative; z-index: 2; background: var(--bg);

@@ -27,11 +27,15 @@
 
   function fallback() {
     section.classList.remove("is-scrub");
+    const n = section.nextElementSibling;
+    if (n) n.classList.remove("scrub-curtain");
   }
 
   function activate() {
     const { gsap, ScrollTrigger } = window;
     section.classList.add("is-scrub");
+    const next = section.nextElementSibling;
+    if (next) next.classList.add("scrub-curtain");
 
     let target = 0, current = 0, shown = -1;
     const dur = video.duration;
@@ -40,7 +44,7 @@
     ScrollTrigger.create({
       trigger: section,
       start: "top top+=72",
-      end: "bottom bottom",
+      end: () => "+=" + window.innerHeight,
       onUpdate: (self) => { target = self.progress; },
     });
 

@@ -18,7 +18,8 @@ Fora: HTML, CSS, JS de comportamento, vídeos e poster do hero, `og-pointdog.jpg
 2. `vercel.json` é JSON válido, mantém o bloco de `/assets/*` e adiciona `/css/*` e `/js/*` com o cache acima.
 3. `.vercelignore` contém `_arquivo/`; a pasta `_arquivo/` mantém os 5 arquivos intactos (mesmo hash).
 4. As 5 páginas carregam sem 404 (servir local e conferir todos os `src`/`srcset`/`href`/`poster`/`data-src*` com status 200).
-5. Peso de `assets/` em produção cai de ~8,5 MB para ≤ 4,8 MB (medir antes e depois).
+5. Peso de `assets/` em produção cai ≥ 6 MB, de ~12 MB para ≤ 5,5 MB (medir antes e depois).
+   - Correção (validação): o ponto de partida "~8,5 MB → ≤ 4,8 MB" estava errado; medido com `git ls-tree -r -l`: 12.050.367 bytes na `main` e 5.369.413 na branch (queda de 6.680.954). Só os vídeos do scrub em uso (720 + 480, fora de escopo) somam 4,75 MB.
 6. `check-site.mjs` ganha uma checagem: nenhum arquivo em `assets/img` ou `assets/video` sem referência nos HTML/CSS/JS (para evitar nova acumulação), e passa.
 7. htmlhint e `node scripts/check-site.mjs` passam.
 8. Nada fora do escopo foi tocado.

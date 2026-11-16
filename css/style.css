@@ -222,7 +222,10 @@ button { font-family: inherit; cursor: pointer; }
   transition: opacity 0.2s, color 0.2s;
 }
 .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--orange-deep); }
-.header-actions { display: flex; align-items: center; gap: 20px; }
+.header-actions { display: flex; align-items: center; gap: 12px; }
+.header-actions .btn { padding: 11px 18px; white-space: nowrap; }
+.nav-links .nav-cta { display: none; }
+@media (max-width: 900px) { .nav-links .nav-cta { display: block; } }
 .nav-toggle {
   display: none;
   background: none;
@@ -246,7 +249,9 @@ button { font-family: inherit; cursor: pointer; }
   }
   .site-header.nav-open .nav-links { display: flex; }
   .nav-toggle { display: block; }
-  .header-actions .btn-primary { display: none; }
+  .header-actions .btn { display: none; }
+  .nav-cta { font-weight: 600; opacity: 1; }
+  .nav-cta-primary { color: var(--orange-deep); }
 }
 
 /* ===== Footer ===== */
@@ -258,7 +263,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1.3fr 0.8fr 2.4fr;
   gap: 48px;
   margin-bottom: 48px;
 }
@@ -270,6 +275,11 @@ button { font-family: inherit; cursor: pointer; }
 }
 .footer-grid ul li { margin-bottom: 10px; color: var(--text-muted); font-size: 0.92rem; }
 .footer-grid ul li a:hover { color: var(--orange-deep); }
+.footer-grid ul.footer-units { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 32px; }
+.footer-grid ul.footer-units li { margin-bottom: 0; }
+.footer-units strong { color: var(--text); }
+.card .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.card[id] { scroll-margin-top: 108px; }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .footer-brand img { height: 36px; width: auto; }
 .footer-bottom {
@@ -282,6 +292,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 @media (max-width: 700px) {
   .footer-grid { grid-template-columns: 1fr; }
+  .footer-grid ul.footer-units { grid-template-columns: 1fr; }
 }
 
 /* ===== Simple hero (inner pages, no video) ===== */

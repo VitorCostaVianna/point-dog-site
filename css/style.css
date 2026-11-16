@@ -271,7 +271,7 @@ button { font-family: inherit; cursor: pointer; }
 .footer-grid ul li { margin-bottom: 10px; color: var(--text-muted); font-size: 0.92rem; }
 .footer-grid ul li a:hover { color: var(--orange-deep); }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
-.footer-brand img { height: 36px; }
+.footer-brand img { height: 36px; width: auto; }
 .footer-bottom {
   border-top: 1px solid var(--border-soft);
   padding-top: 24px;

@@ -49,9 +49,19 @@ if (/<video[^>]*id="scrub-video"/.test(idx) && !/id="scrub-video"[^>]*poster=/.t
 // Mídia sem referência: evita acumular arquivos que o deploy carrega sem uso
 const fontes = [...pages, ...['css', 'js'].flatMap(d => existsSync(join(root, d)) ? readdirSync(join(root, d)).map(f => join(d, f)) : [])];
 const textoFontes = fontes.map(f => readFileSync(join(root, f), 'utf8')).join('\n');
+// Exige o caminho inteiro (assets/img/nome.ext) e fim de nome logo depois, para que um arquivo
+// cujo nome é pedaço de outro (ex.: "480.webp" dentro de "loja-tradicao-480.webp") não passe.
+const citado = caminho => {
+  for (let i = textoFontes.indexOf(caminho); i !== -1; i = textoFontes.indexOf(caminho, i + 1)) {
+    if (!/[\w.-]/.test(textoFontes[i + caminho.length] || '')) return true;
+  }
+  return false;
+};
+const listar = dir => readdirSync(join(root, dir), { withFileTypes: true })
+  .flatMap(e => e.isDirectory() ? listar(`${dir}/${e.name}`) : [`${dir}/${e.name}`]);
 for (const dir of ['assets/img', 'assets/video']) {
-  for (const f of readdirSync(join(root, dir))) {
-    if (!textoFontes.includes(f)) errors.push(`mídia sem referência em html/css/js: ${dir}/${f} (mover para _arquivo/ ou remover)`);
+  for (const caminho of listar(dir)) {
+    if (!citado(caminho)) errors.push(`mídia sem referência em html/css/js: ${caminho} (mover para _arquivo/ ou remover)`);
   }
 }
 

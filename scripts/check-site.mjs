@@ -65,5 +65,23 @@ for (const dir of ['assets/img', 'assets/video']) {
   }
 }
 
+// SEO local: ids das unidades, âncoras para contato.html, texto proibido
+const contato = readFileSync(join(root, 'contato.html'), 'utf8');
+const idsUnidades = ['horto', 'pitangui', 'sao-roque', 'formosa'];
+const idsContato = [...contato.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
+for (const id of idsUnidades) {
+  const n = idsContato.filter(x => x === id).length;
+  if (n !== 1) errors.push(`contato.html: id="${id}" deveria aparecer 1 vez, aparece ${n}`);
+}
+const mapas = (contato.match(/<a [^>]*href="https:\/\/www\.google\.com\/maps\/search\/[^"]+" target="_blank" rel="noopener">Ver no Mapa<\/a>/g) || []).length;
+if (mapas !== idsUnidades.length) errors.push(`contato.html: esperados ${idsUnidades.length} botões "Ver no Mapa" (com target e rel), encontrados ${mapas}`);
+for (const page of pages) {
+  const html = readFileSync(join(root, page), 'utf8');
+  for (const m of html.matchAll(/href="(?:\.\/|\/)?contato\.html#([^"]*)"/g)) {
+    if (!idsContato.includes(m[1])) errors.push(`${page}: âncora sem destino → contato.html#${m[1]}`);
+  }
+  for (const proibido of ['Vasc.', 'Comprar Agora']) if (html.toLowerCase().includes(proibido.toLowerCase())) errors.push(`${page}: contém "${proibido}"`);
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

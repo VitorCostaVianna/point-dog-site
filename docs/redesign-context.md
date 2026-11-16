@@ -137,3 +137,5 @@ o verde como cor primária.
   "monitor de sinais vitais" por não ter nada a ver com pet shop).
 - É um site institucional focado em conversão — CTAs (WhatsApp) devem ser
   reforçados pelas decisões de design, não só estética.
+
+> Nota (PR cache-limpeza): `loja-1996.webp`, `loja-hoje.webp`, `loja-unidades.webp`, `hero-banho-tosa.mp4` e `hero-golden-campo.mp4` foram movidos para `_arquivo/` (fora do deploy via `.vercelignore`). `loja-tradicao-26-anos.webp` e os JPG `servico-*.jpg` foram removidos (continuam no histórico do git). Os caminhos acima refletem o estado da época.

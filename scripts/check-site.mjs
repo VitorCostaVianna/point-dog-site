@@ -46,5 +46,14 @@ for (const [f, max] of Object.entries(budgets)) {
 const idx = readFileSync(join(root, 'index.html'), 'utf8');
 if (/<video[^>]*id="scrub-video"/.test(idx) && !/id="scrub-video"[^>]*poster=/.test(idx)) errors.push('index.html: #scrub-video sem poster');
 
+// Mídia sem referência: evita acumular arquivos que o deploy carrega sem uso
+const fontes = [...pages, ...['css', 'js'].flatMap(d => existsSync(join(root, d)) ? readdirSync(join(root, d)).map(f => join(d, f)) : [])];
+const textoFontes = fontes.map(f => readFileSync(join(root, f), 'utf8')).join('\n');
+for (const dir of ['assets/img', 'assets/video']) {
+  for (const f of readdirSync(join(root, dir))) {
+    if (!textoFontes.includes(f)) errors.push(`mídia sem referência em html/css/js: ${dir}/${f} (mover para _arquivo/ ou remover)`);
+  }
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

@@ -21,3 +21,5 @@ Fora: vídeo e poster do hero, fontes, JS, CSS de layout (só ajustar se a troca
 
 ## Execução
 Implementador (escopo fechado, só o que está acima) → validador/corretor independente mede cada critério e corrige falhas → PR → CI → prévia da Vercel conferida pelo dono → merge.
+
+> Nota (PR cache-limpeza): `loja-1996.webp`, `loja-hoje.webp`, `loja-unidades.webp`, `hero-banho-tosa.mp4` e `hero-golden-campo.mp4` foram movidos para `_arquivo/` (fora do deploy via `.vercelignore`). `loja-tradicao-26-anos.webp` e os JPG `servico-*.jpg` foram removidos (continuam no histórico do git). Os caminhos acima refletem o estado da época.

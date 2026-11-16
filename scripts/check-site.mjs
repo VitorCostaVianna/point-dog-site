@@ -13,6 +13,21 @@ for (const page of pages) {
   }
   if ((html.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${page}: deve ter exatamente um <h1>`);
   for (const img of html.matchAll(/<img\b(?![^>]*\balt=)[^>]*>/g)) errors.push(`${page}: <img> sem alt: ${img[0].slice(0, 60)}`);
+  // Imagens: width/height, lazy (exceto primeira tela: logo do cabeçalho ou data-eager) e srcset existente
+  const header = (html.match(/<header[\s\S]*?<\/header>/) || [''])[0];
+  for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
+    const nome = tag.slice(0, 70);
+    if (!/\swidth="\d+"/.test(tag) || !/\sheight="\d+"/.test(tag)) errors.push(`${page}: <img> sem width/height: ${nome}`);
+    const eager = /\sdata-eager\b/.test(tag) || header.includes(tag);
+    const lazy = /\sloading="lazy"/.test(tag);
+    if (!eager && !lazy) errors.push(`${page}: <img> abaixo da dobra sem loading="lazy": ${nome}`);
+    if (eager && lazy) errors.push(`${page}: <img> da primeira tela com lazy: ${nome}`);
+    const ss = tag.match(/\ssrcset="([^"]+)"/);
+    if (ss) for (const item of ss[1].split(',')) {
+      const u = item.trim().split(/\s+/)[0];
+      if (!existsSync(join(root, dirname(page), u))) errors.push(`${page}: srcset quebrado → ${u}`);
+    }
+  }
   for (const m of html.matchAll(/(?:href|src)="([^"#?]+)(?:[?#][^"]*)?"/g)) {
     const ref = m[1];
     if (/^(https?:|mailto:|tel:|data:|\/\/)/.test(ref)) continue;

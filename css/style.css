@@ -200,7 +200,7 @@ button { font-family: inherit; cursor: pointer; }
   justify-content: space-between;
   height: 84px;
 }
-.brand { display: flex; align-items: center; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; white-space: nowrap; }
 .brand img { height: 44px; width: auto; }
 .brand span {
   font-family: var(--font-display);
@@ -225,7 +225,7 @@ button { font-family: inherit; cursor: pointer; }
 .header-actions { display: flex; align-items: center; gap: 12px; }
 .header-actions .btn { padding: 11px 18px; white-space: nowrap; }
 .nav-links .nav-cta { display: none; }
-@media (max-width: 900px) { .nav-links .nav-cta { display: block; } }
+@media (max-width: 1000px) { .nav-links .nav-cta { display: block; } }
 .nav-toggle {
   display: none;
   background: none;
@@ -233,7 +233,7 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--text);
   font-size: 1.6rem;
 }
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .nav-links {
     position: absolute;
     top: 84px;
@@ -250,8 +250,8 @@ button { font-family: inherit; cursor: pointer; }
   .site-header.nav-open .nav-links { display: flex; }
   .nav-toggle { display: block; }
   .header-actions .btn { display: none; }
-  .nav-cta { font-weight: 600; opacity: 1; }
-  .nav-cta-primary { color: var(--orange-deep); }
+  .nav-links .nav-cta { font-weight: 600; opacity: 1; }
+  .nav-links .nav-cta-primary { color: var(--orange-deep); }
 }
 
 /* ===== Footer ===== */
@@ -278,8 +278,11 @@ button { font-family: inherit; cursor: pointer; }
 .footer-grid ul.footer-units { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 32px; }
 .footer-grid ul.footer-units li { margin-bottom: 0; }
 .footer-units strong { color: var(--text); }
+.footer-units a[href^="tel:"] { white-space: nowrap; }
+@media (max-width: 900px) { .footer-grid ul.footer-units { grid-template-columns: 1fr; } }
 .card .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.card[id] { scroll-margin-top: 108px; }
+/* 85px do cabeçalho fixo + folga; o .reveal sobe 28px depois do salto da âncora */
+.card[id] { scroll-margin-top: 136px; }
 .footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .footer-brand img { height: 36px; width: auto; }
 .footer-bottom {

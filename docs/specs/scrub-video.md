@@ -58,3 +58,5 @@ Conteúdo e qualidade
 - Seção curta, ~2 telas de rolagem, para os 94 quadros ficarem fluidos.
 - Arquivos recodificados (sem áudio, todos os quadros-chave): `assets/video/scrub-produtos-720.mp4` (1,4 MB) e `-480.mp4` (0,77 MB) + poster `assets/img/scrub-produtos-poster.jpg`.
 - O vídeo é gerado por IA, mas só mostra objetos genéricos; o critério 9 vale como "aprovado pelo dono" (feito).
+
+> Nota (PR cache-limpeza): `loja-1996.webp`, `loja-hoje.webp`, `loja-unidades.webp`, `hero-banho-tosa.mp4` e `hero-golden-campo.mp4` foram movidos para `_arquivo/` (fora do deploy via `.vercelignore`). `loja-tradicao-26-anos.webp` e os JPG `servico-*.jpg` foram removidos (continuam no histórico do git). Os caminhos acima refletem o estado da época.

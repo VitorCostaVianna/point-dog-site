@@ -65,5 +65,17 @@ for (const dir of ['assets/img', 'assets/video']) {
   }
 }
 
+// SEO local: ids das unidades, âncoras para contato.html, texto proibido
+const contato = readFileSync(join(root, 'contato.html'), 'utf8');
+const idsUnidades = ['horto', 'pitangui', 'sao-roque', 'formosa'];
+for (const id of idsUnidades) if (!contato.includes(`id="${id}"`)) errors.push(`contato.html: falta id="${id}"`);
+for (const page of pages) {
+  const html = readFileSync(join(root, page), 'utf8');
+  for (const m of html.matchAll(/href="contato\.html#([^"]+)"/g)) {
+    if (!contato.includes(`id="${m[1]}"`)) errors.push(`${page}: âncora sem destino → contato.html#${m[1]}`);
+  }
+  for (const proibido of ['Vasc.', 'Comprar Agora']) if (html.includes(proibido)) errors.push(`${page}: contém "${proibido}"`);
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

@@ -20,6 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600..800&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/webp" href="assets/img/logo-pointdog.webp">
   <link rel="apple-touch-icon" href="assets/img/logo-pointdog.webp">
+  <link rel="preload" as="image" href="assets/img/scrub-produtos-poster.webp" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="css/style.css">
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://www.pointdog.com.br/#org", "name": "Point Dog Pet", "url": "https://www.pointdog.com.br/", "logo": "https://www.pointdog.com.br/assets/img/logo-pointdog.webp", "foundingDate": "1998", "telephone": "+55-31-3468-3299"}, {"@type": "PetStore", "name": "Point Dog Pet – Horto", "image": "https://www.pointdog.com.br/assets/img/og-pointdog.jpg", "address": {"@type": "PostalAddress", "streetAddress": "R. Dona Nancy de Vasconcelos Gomes, 336 - Horto", "addressLocality": "Belo Horizonte", "addressRegion": "MG", "addressCountry": "BR"}, "areaServed": "Horto", "parentOrganization": {"@id": "https://www.pointdog.com.br/#org"}}, {"@type": "PetStore", "name": "Point Dog Pet – Pitangui", "image": "https://www.pointdog.com.br/assets/img/og-pointdog.jpg", "address": {"@type": "PostalAddress", "streetAddress": "R. Pitangui, 3003 - Sagrada Família", "addressLocality": "Belo Horizonte", "addressRegion": "MG", "addressCountry": "BR"}, "areaServed": "Sagrada Família", "parentOrganization": {"@id": "https://www.pointdog.com.br/#org"}}, {"@type": "PetStore", "name": "Point Dog Pet – São Roque", "image": "https://www.pointdog.com.br/assets/img/og-pointdog.jpg", "address": {"@type": "PostalAddress", "streetAddress": "R. São Roque, 1231-A - Sagrada Família", "addressLocality": "Belo Horizonte", "addressRegion": "MG", "addressCountry": "BR"}, "areaServed": "Sagrada Família", "parentOrganization": {"@id": "https://www.pointdog.com.br/#org"}}, {"@type": "PetStore", "name": "Point Dog Pet – Formosa", "image": "https://www.pointdog.com.br/assets/img/og-pointdog.jpg", "address": {"@type": "PostalAddress", "streetAddress": "R. Formosa, 113A - Santa Tereza", "addressLocality": "Belo Horizonte", "addressRegion": "MG", "addressCountry": "BR"}, "areaServed": "Santa Tereza", "parentOrganization": {"@id": "https://www.pointdog.com.br/#org"}}]}</script>
 </head>
@@ -65,11 +66,10 @@
           </ul>
         </div>
         <div class="scrub-media">
-          <video id="scrub-video" muted playsinline preload="metadata" poster="assets/img/scrub-produtos-poster.jpg"
+          <video id="scrub-video" muted playsinline preload="metadata" poster="assets/img/scrub-produtos-poster.webp"
             width="1920" height="1080"
             data-src-lg="assets/video/scrub-produtos-720.mp4"
-            data-src-md="assets/video/scrub-produtos-720.mp4"
-            data-src-sm="assets/video/scrub-produtos-480.mp4"
+            data-src-sm="assets/video/scrub-produtos-sm-a.mp4" data-src-sm-b="assets/video/scrub-produtos-sm-b.mp4"
             aria-label="Ração, bola de tênis, osso de borracha e coleira flutuando"></video>
         </div>
       </div>

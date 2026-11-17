@@ -37,13 +37,23 @@ for (const page of pages) {
 for (const f of ['sitemap.xml', 'robots.txt', 'vercel.json']) if (!existsSync(join(root, f))) errors.push(`arquivo ausente: ${f}`);
 
 // Vídeo do scrub: peso por versão e poster (critérios 1 e 12 da spec)
-const budgets = { 'scrub-produtos-720.mp4': 4e6, 'scrub-produtos-480.mp4': 2.5e6 };
+const budgets = { 'scrub-produtos-720.mp4': 4e6, 'scrub-produtos-sm-a.mp4': 1.1e6, 'scrub-produtos-sm-b.mp4': 0.8e6 };
 for (const [f, max] of Object.entries(budgets)) {
   const p = join(root, 'assets/video', f);
   if (!existsSync(p)) errors.push(`vídeo ausente: assets/video/${f}`);
   else if (statSync(p).size > max) errors.push(`vídeo acima do limite (${max / 1e6} MB): ${f}`);
 }
 const idx = readFileSync(join(root, 'index.html'), 'utf8');
+// Poster é o LCP: preload com fetchpriority=high, arquivo existente e <= 100 KB
+const pre = idx.match(/<link[^>]*rel="preload"[^>]*as="image"[^>]*>/);
+const preHref = pre && pre[0].match(/href="([^"]+)"/);
+if (!pre || !/fetchpriority="high"/.test(pre[0]) || !preHref) errors.push('index.html: falta <link rel="preload" as="image" fetchpriority="high"> do poster');
+else {
+  const pp = join(root, preHref[1]);
+  if (!existsSync(pp)) errors.push(`preload do poster aponta para arquivo ausente: ${preHref[1]}`);
+  else if (statSync(pp).size > 100e3) errors.push(`poster acima de 100 KB: ${preHref[1]}`);
+  if (!new RegExp(`id="scrub-video"[^>]*poster="${preHref[1]}"`).test(idx)) errors.push('index.html: o preload não é o poster do #scrub-video');
+}
 if (/<video[^>]*id="scrub-video"/.test(idx) && !/id="scrub-video"[^>]*poster=/.test(idx)) errors.push('index.html: #scrub-video sem poster');
 
 // Mídia sem referência: evita acumular arquivos que o deploy carrega sem uso

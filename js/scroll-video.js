@@ -14,7 +14,9 @@
     gsap.registerPlugin(ScrollTrigger);
 
     const w = window.innerWidth;
-    video.src = w >= 1200 ? video.dataset.srcLg : w >= 700 ? video.dataset.srcMd : video.dataset.srcSm;
+    // TEMPORÁRIO (prévia): ?v=B escolhe a versão agressiva do celular; remover após a decisão do dono
+    const sm = new URLSearchParams(location.search).get("v") === "B" ? video.dataset.srcSmB : video.dataset.srcSm;
+    video.src = w >= 700 ? video.dataset.srcLg : sm;
     video.preload = "auto";
 
     video.addEventListener("error", fallback, { once: true });
@@ -65,7 +67,15 @@
     ScrollTrigger.refresh();
   }
 
-  // GSAP carrega com defer; espera o load para garantir
-  if (document.readyState === "complete") start();
-  else window.addEventListener("load", start, { once: true });
+  // Economia de dados ou rede 2g: nunca baixa o vídeo; fica o poster estático (plano B)
+  const conn = navigator.connection || {};
+  if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "")) return;
+
+  // O poster é o LCP: o vídeo só baixa depois do load e de um momento ocioso
+  function later() {
+    if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 2000 });
+    else setTimeout(start, 300);
+  }
+  if (document.readyState === "complete") later();
+  else window.addEventListener("load", later, { once: true });
 })();

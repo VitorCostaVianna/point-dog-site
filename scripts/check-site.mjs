@@ -112,7 +112,13 @@ for (const id of idsUnidades) {
 if (lojas.length !== idsUnidades.length) errors.push(`contato.html: esperados ${idsUnidades.length} PetStore no JSON-LD, achei ${lojas.length}`);
 if (ldNos(ldTodos['index.html']).some(n => n['@type'] === 'PetStore')) errors.push('index.html: PetStore pertence a contato.html');
 if (!ldNos(ldTodos['index.html']).some(n => n['@id'] === 'https://www.pointdog.com.br/#org')) errors.push('index.html: JSON-LD sem Organization #org');
-if (/31030-072/.test(Object.values(ldTodos).length ? pages.map(p => readFileSync(join(root, p), 'utf8')).join('') : '')) errors.push('CEP antigo 31030-072 ainda presente');
+if (/31030-?072/.test(textoFontes)) errors.push('CEP antigo 31030-072 ainda presente');
+// Telefone do JSON-LD (E.164) precisa existir como tel: visível em contato.html; parentOrganization precisa ter Organization no mesmo bloco
+for (const l of lojas) {
+  const d = String(l.telephone || '').replace(/\D/g, '');
+  if (!d || !contato.includes('href="tel:+' + d + '"')) errors.push('contato.html: telefone ' + l.telephone + ' do JSON-LD não bate com tel: visível');
+  if (l.parentOrganization && !ldNos(ldTodos['contato.html']).some(n => n['@id'] === l.parentOrganization['@id'] && n['@type'] === 'Organization')) errors.push('contato.html: parentOrganization sem Organization correspondente no mesmo JSON-LD');
+}
 
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

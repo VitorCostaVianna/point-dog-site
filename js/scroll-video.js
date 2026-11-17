@@ -14,9 +14,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     const w = window.innerWidth;
-    // TEMPORÁRIO (prévia): ?v=B escolhe a versão agressiva do celular; remover após a decisão do dono
-    const sm = new URLSearchParams(location.search).get("v") === "B" ? video.dataset.srcSmB : video.dataset.srcSm;
-    video.src = w >= 700 ? video.dataset.srcLg : sm;
+    video.src = w >= 700 ? video.dataset.srcLg : video.dataset.srcSm;
     video.preload = "auto";
 
     video.addEventListener("error", fallback, { once: true });

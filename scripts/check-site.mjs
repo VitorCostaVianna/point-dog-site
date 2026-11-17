@@ -37,7 +37,7 @@ for (const page of pages) {
 for (const f of ['sitemap.xml', 'robots.txt', 'vercel.json']) if (!existsSync(join(root, f))) errors.push(`arquivo ausente: ${f}`);
 
 // Vídeo do scrub: peso por versão e poster (critérios 1 e 12 da spec)
-const budgets = { 'scrub-produtos-720.mp4': 4e6, 'scrub-produtos-sm-a.mp4': 1.1e6, 'scrub-produtos-sm-b.mp4': 0.8e6 };
+const budgets = { 'scrub-produtos-720.mp4': 4e6, 'scrub-produtos-sm-a.mp4': 1.1e6 };
 for (const [f, max] of Object.entries(budgets)) {
   const p = join(root, 'assets/video', f);
   if (!existsSync(p)) errors.push(`vídeo ausente: assets/video/${f}`);

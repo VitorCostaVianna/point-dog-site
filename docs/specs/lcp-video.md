@@ -14,7 +14,7 @@ Fora: layout/CSS do hero salvo o mínimo, fontes (PR 6), CLS (PR 7), textos, out
 
 ## Critérios de aceite
 1. O `<head>` da home tem `<link rel="preload" as="image" fetchpriority="high">` do poster (com `imagesrcset`/`media` se houver versões por largura) e o poster está otimizado (≤ 100 KB, dimensão adequada; WebP/AVIF se o `<video poster>` aceitar sem prejuízo; senão JPEG otimizado).
-2. O LCP medido (Lighthouse mobile, 3 rodadas, mediana) é o poster/imagem, não o vídeo, e **LCP ≤ 2,5 s** no ambiente de teste. Registrar antes/depois com o mesmo método, contra `origin/main`.
+2. O poster é o elemento de LCP e baixa cedo (preload); LCP ≤ 2,5 s depende do PR 6 (fontes sem bloqueio); registrar o valor medido. (Corrigido na validação: o CSS do Google Fonts bloqueia a renderização, FCP ≈ 3 s, e o LCP fica ≈ FCP + 0,3 s; ver medição abaixo.)
 3. O vídeo só começa a baixar depois do primeiro paint e do `load` (por exemplo `requestIdleCallback`/`setTimeout`), e nunca com `saveData` ou conexão 2g. Com rede lenta ou JS desligado a página continua completa (poster + textos + botões).
 4. Peso baixado no carregamento inicial do celular cai: medir bytes transferidos até o `load` (excluindo o vídeo) e o total depois que o vídeo entra; relatar.
 5. Versões A e B geradas com ffmpeg, all-intra, sem áudio; relatar tamanho, quadros, resolução. Comparação visual lado a lado do mesmo trecho (capturas) e, se possível, teste de rolagem no navegador (nenhum salto visível). O scrub continua com o mesmo comportamento (`currentTime` ligado à rolagem, 1,5 tela de pista).
@@ -25,3 +25,8 @@ Fora: layout/CSS do hero salvo o mínimo, fontes (PR 6), CLS (PR 7), textos, out
 
 ## Observação
 O fps da rolagem do scrub só pode ser medido pelo dono no PC e no celular real. O relatório deve dizer isso explicitamente.
+
+## Medição (validação independente, Lighthouse mobile local, 3 rodadas, mediana)
+- `origin/main`: LCP 3,68 s (3,72 / 3,42 / 3,68), FCP 3,04 s; poster JPEG 96 KB descoberto tarde (atraso de carga 0,15 a 0,64 s).
+- Branch: LCP 3,17 s (3,43 / 3,17 / 2,65), FCP 2,85 s; poster WebP 34 KB com atraso de carga ≈ 0. Render delay (≈ 2,4 a 2,8 s) domina: a pintura espera o CSS do Google Fonts (render-blocking, ~1,0 s). Meta de 2,5 s fica para o PR 6.
+- CLS igual à main (0,08 a 0,095, elemento `.hero-actions`).

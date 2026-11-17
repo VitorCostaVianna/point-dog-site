@@ -45,9 +45,9 @@ for (const [f, max] of Object.entries(budgets)) {
 }
 const idx = readFileSync(join(root, 'index.html'), 'utf8');
 // Poster é o LCP: preload com fetchpriority=high, arquivo existente e <= 100 KB
-const pre = idx.match(/<link[^>]*rel="preload"[^>]*as="image"[^>]*>/);
-const preHref = pre && pre[0].match(/href="([^"]+)"/);
-if (!pre || !/fetchpriority="high"/.test(pre[0]) || !preHref) errors.push('index.html: falta <link rel="preload" as="image" fetchpriority="high"> do poster');
+const pre = (idx.match(/<link[^>]*>/g) || []).filter((t) => /rel="preload"/.test(t) && /as="image"/.test(t))[0];
+const preHref = pre && pre.match(/href="([^"]+)"/);
+if (!pre || !/fetchpriority="high"/.test(pre) || !preHref) errors.push('index.html: falta <link rel="preload" as="image" fetchpriority="high"> do poster');
 else {
   const pp = join(root, preHref[1]);
   if (!existsSync(pp)) errors.push(`preload do poster aponta para arquivo ausente: ${preHref[1]}`);

@@ -234,5 +234,11 @@ const unEsperadas = [
   });
 }
 
+// JSON-LD da Home: sameAs com as 4 redes do rodapé
+for (const url of ['https://www.instagram.com/pointdogpet/', 'https://www.facebook.com/pointdogpet', 'https://www.tiktok.com/@pointdogpet', 'https://linktr.ee/pointdogpetshop']) {
+  const org = ldNos(ldTodos['index.html']).find(n => n['@id'] === 'https://www.pointdog.com.br/#org');
+  if (!org || !(org.sameAs || []).includes(url)) errors.push('index.html: JSON-LD Organization sem sameAs ' + url);
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

@@ -1,3 +1,19 @@
+/* Fontes hospedadas localmente (OFL): só o subconjunto latino, que cobre o português */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("../assets/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/figtree-latin.woff2") format("woff2");
+}
+
 /* ===== Design tokens ===== */
 :root {
   --bg: #FFFFFF;
@@ -496,8 +512,9 @@ html:has(.scrub.is-scrub) { scroll-behavior: auto; }
 
 /* Celular com hero preso: tira o parágrafo (as frases já cobrem) para tudo caber na tela */
 @media (max-width: 899px) {
-  .scrub.is-scrub .scrub-copy { padding-top: 14px; padding-bottom: 14px; }
-  .scrub.is-scrub .scrub-copy .lead { display: none; }
+  /* Chave em html.scrub-js (definida no <head>, antes da pintura) e não em .is-scrub (adicionada pelo JS depois): evita deslocar os botões quando o scrub liga */
+  html.scrub-js .scrub .scrub-copy { padding-top: 14px; padding-bottom: 14px; }
+  html.scrub-js .scrub .scrub-copy .lead { display: none; }
 }
 
 /* ===== Identidade tipográfica: Bricolage Grotesque (títulos) + Figtree (texto) ===== */

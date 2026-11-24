@@ -141,6 +141,20 @@ for (const page of pages) {
   }
   if (/<img[^>]*logo-pointdog[^>]*alt="Point Dog"/.test(html)) errors.push(`${page}: logo com alt="Point Dog" ao lado do texto "Point Dog"; use alt=""`);
 }
+// Fontes locais: sem Google Fonts (bloqueia a renderização e causa troca de fonte), arquivos existem e são pré-carregados
+for (const page of pages) {
+  const html = readFileSync(join(root, page), 'utf8');
+  if (/fonts\.(googleapis|gstatic)\.com/.test(html)) errors.push(`${page}: usa Google Fonts; use assets/fonts (spec fontes-locais.md)`);
+  for (const f of ['bricolage-grotesque-latin.woff2', 'figtree-latin.woff2']) {
+    if (!new RegExp(`rel="preload"[^>]*href="/?assets/fonts/${f}"[^>]*crossorigin`).test(html)) errors.push(`${page}: falta preload de assets/fonts/${f} (com crossorigin)`);
+    if (!existsSync(join(root, 'assets/fonts', f))) errors.push(`fonte ausente: assets/fonts/${f}`);
+  }
+}
+
+// CLS do hero: a classe scrub-js nasce no <head> (antes da pintura); regras do hero no celular não podem depender de .is-scrub
+if (!/<script>[^<]*classList\.add\("scrub-js"\)/.test(idx)) errors.push('index.html: falta o script inline que define html.scrub-js no <head>');
+if (/@media[^{]*max-width: 899px[^{]*\{[^@]*\.scrub\.is-scrub \.scrub-copy[^{]*\{[^}]*(padding|display: none)/.test(cssTxt0())) errors.push('css: regras do hero no celular dependem de .is-scrub (causa CLS); use html.scrub-js');
+function cssTxt0() { return readFileSync(join(root, 'css/style.css'), 'utf8'); }
 // Sem cara de IA: sem emoji nem ✔ no HTML, sem frases sem base, sem verde nos selos
 const semEmoji = /[\u{1F300}-\u{1FAFF}\u{2714}\u{2764}]/u;
 for (const page of pages) {

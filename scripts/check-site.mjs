@@ -125,7 +125,7 @@ for (const id of idsUnidades) {
 if (lojas.length !== idsUnidades.length) errors.push(`contato.html: esperados ${idsUnidades.length} PetStore no JSON-LD, achei ${lojas.length}`);
 if (ldNos(ldTodos['index.html']).some(n => n['@type'] === 'PetStore')) errors.push('index.html: PetStore pertence a contato.html');
 if (!ldNos(ldTodos['index.html']).some(n => n['@id'] === 'https://www.pointdog.com.br/#org')) errors.push('index.html: JSON-LD sem Organization #org');
-if (/31030-?072/.test(textoFontes)) errors.push('CEP antigo 31030-072 ainda presente');
+if (/31030-?071/.test(textoFontes)) errors.push('CEP antigo 31030-071 ainda presente (o do Horto, conforme o Google Maps, é 31030-072)');
 // Telefone do JSON-LD (E.164) precisa existir como tel: visível em contato.html; parentOrganization precisa ter Organization no mesmo bloco
 for (const l of lojas) {
   const d = String(l.telephone || '').replace(/\D/g, '');

@@ -3,7 +3,7 @@
 Pedido do dono (2026-11-24): reescrever "nível hospitalar", remover emojis dos cards, e os selos verdes (dono sem preferência).
 
 ## Escopo
-- `index.html`: "Higiene Rigorosa / nível hospitalar" vira "Tudo em um endereço", só com fato do site (Horto = Unidade Completa: banho e tosa, clínica e pet shop). Cards de serviço sem ícone/emoji. Selo do hero: "Seu pet tratado como família" (frase vaga) vira "Belo Horizonte, desde 1998".
+- `index.html`: "Higiene Rigorosa / nível hospitalar" vira "Tudo em um endereço", só com fato do site (Horto = Unidade Completa: banho e tosa, clínica e pet shop). Cards de serviço sem ícone/emoji. Selo do hero: "Seu pet tratado como família" (frase vaga) fica como está (dono pediu para manter), só deixa de ser verde.
 - `sobre.html`: sem 🤝 e ❤️.
 - `servicos.html` e `.plan-badge`: o "✔" (caractere) vira marcador desenhado em CSS.
 - `css/style.css`: `.badge` e `.scrub .badge` de verde para o laranja da marca; remove CSS dos ícones dos cards.

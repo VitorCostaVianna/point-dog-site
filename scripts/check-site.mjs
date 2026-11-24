@@ -8,7 +8,10 @@ const errors = [];
 
 for (const page of pages) {
   const html = readFileSync(join(root, page), 'utf8');
-  for (const tag of ['<title>', 'name="description"', 'rel="canonical"', 'property="og:image"', 'rel="icon"', 'lang="pt-BR"']) {
+  // 404.html: servida em qualquer URL, então fica fora do índice (noindex, sem canonical) e usa caminhos absolutos
+  const naoIndexada = page === '404.html';
+  if (naoIndexada && !html.includes('name="robots" content="noindex"')) errors.push(`${page}: falta noindex`);
+  for (const tag of ['<title>', 'name="description"', ...(naoIndexada ? [] : ['rel="canonical"']), 'property="og:image"', 'rel="icon"', 'lang="pt-BR"']) {
     if (!html.includes(tag)) errors.push(`${page}: falta ${tag}`);
   }
   if ((html.match(/<h1[\s>]/g) || []).length !== 1) errors.push(`${page}: deve ter exatamente um <h1>`);

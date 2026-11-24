@@ -168,5 +168,15 @@ for (const page of pages) {
 const cssTxt = readFileSync(join(root, 'css/style.css'), 'utf8');
 if (/\.(badge|plan-badge)[^{]*\{[^}]*(var\(--green|rgba\(30, ?158)/.test(cssTxt)) errors.push('css: selo (.badge/.plan-badge) não pode usar verde');
 
+// PetLove: aceito só na clínica veterinária (decisão do dono, 2026-11-24): o selo aparece 1 vez por página e logo após o título da Clínica
+for (const page of ['index.html', 'servicos.html']) {
+  const html = readFileSync(join(root, page), 'utf8');
+  const selos = [...html.matchAll(/<span class="plan-badge">[^<]*<\/span>/g)];
+  if (selos.length !== 1) { errors.push(`${page}: esperado 1 selo PetLove (só clínica), achei ${selos.length}`); continue; }
+  const titulo = [...html.slice(0, selos[0].index).matchAll(/<h[23][^>]*>([^<]*)<\/h[23]>/g)].pop();
+  if (!titulo || !/Clínica/i.test(titulo[1])) errors.push(`${page}: selo PetLove fora da Clínica Veterinária`);
+}
+for (const page of pages) if (/petlove/i.test(readFileSync(join(root, page), 'utf8').replace(/<span class="plan-badge">[\s\S]*?<\/span>/g, '')) && page !== 'index.html' && page !== 'servicos.html') errors.push(`${page}: menciona PetLove fora das páginas previstas`);
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

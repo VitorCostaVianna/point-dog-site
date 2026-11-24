@@ -240,5 +240,21 @@ for (const url of ['https://www.instagram.com/pointdogpet/', 'https://www.facebo
   if (!org || !(org.sameAs || []).includes(url)) errors.push('index.html: JSON-LD Organization sem sameAs ' + url);
 }
 
+// Limpeza de template (spec limpeza-servicos-cards.md): sem "Módulo 0N" e sem botão/link com texto iniciado por "//"
+for (const page of pages) {
+  const html = readFileSync(join(root, page), 'utf8');
+  if (/Módulo 0/.test(html)) errors.push(`${page}: contém "Módulo 0" (etiqueta de template sem informação)`);
+  for (const m of html.matchAll(/<(a|button)\b[^>]*>([\s\S]*?)<\/\1>/g)) {
+    if (m[2].replace(/<[^>]*>/g, '').trim().startsWith('//')) errors.push(`${page}: ${m[1]} com texto iniciado por "//": ${m[2].trim().slice(0, 40)}`);
+  }
+}
+// Cards da Home: link "Pedir produtos →" com aria-label que contém o texto visível
+for (const id of ['pitangui', 'sao-roque', 'formosa']) {
+  const a = (idx.match(new RegExp(`<a [^>]*href="contato[.]html#${id}"[^>]*>[^<]*</a>`)) || [''])[0];
+  const aria = (a.match(/aria-label="([^"]*)"/) || [])[1] || '';
+  if (!/>Pedir produtos →</.test(a)) errors.push(`index.html: card ${id}: texto visível do link deve ser "Pedir produtos →"`);
+  if (!aria.includes('Pedir produtos')) errors.push(`index.html: card ${id}: aria-label deve conter "Pedir produtos" (achei "${aria}")`);
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

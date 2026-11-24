@@ -15,3 +15,5 @@ Ilustração/animação, busca no site, 404 por idioma.
 4. Sem JS obrigatório; sem animação.
 5. Layout em 1 coluna em até 900 px; botão do início e WhatsApp visíveis sem rolar a 375 px (conferir na prévia).
 6. Lighthouse SEO/acessibilidade sem falhas novas.
+
+Nota: na 404 o rodapé usa títulos h2 (a página só tem o h1), com o mesmo visual.

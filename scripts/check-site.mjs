@@ -130,6 +130,17 @@ for (const l of lojas) {
   if (l.parentOrganization && !ldNos(ldTodos['contato.html']).some(n => n['@id'] === l.parentOrganization['@id'] && n['@type'] === 'Organization')) errors.push('contato.html: parentOrganization sem Organization correspondente no mesmo JSON-LD');
 }
 
+// Acessibilidade: níveis de título sem pular e logo decorativo (o nome já está no texto ao lado)
+for (const page of pages) {
+  const html = readFileSync(join(root, page), 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');
+  let ant = 0;
+  for (const m of html.matchAll(/<h([1-6])[\s>]/g)) {
+    const n = +m[1];
+    if (ant && n > ant + 1) errors.push(`${page}: título h${n} depois de h${ant} (pula nível)`);
+    ant = n;
+  }
+  if (/<img[^>]*logo-pointdog[^>]*alt="Point Dog"/.test(html)) errors.push(`${page}: logo com alt="Point Dog" ao lado do texto "Point Dog"; use alt=""`);
+}
 // Fontes locais: sem Google Fonts (bloqueia a renderização e causa troca de fonte), arquivos existem e são pré-carregados
 for (const page of pages) {
   const html = readFileSync(join(root, page), 'utf8');

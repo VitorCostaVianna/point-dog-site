@@ -525,3 +525,25 @@ h2 { font-weight: 700; }
 h3, h4 { font-weight: 700; }
 em { font-style: normal; }
 .scrub-copy h1 { max-width: 15ch; }
+
+/* ===== Unidades (Home): foto opcional no topo, corpo com hierarquia ===== */
+.grid-unidades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 999px) { .grid-unidades { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .grid-unidades { grid-template-columns: 1fr; } }
+.card.unidade { padding: 0; display: flex; flex-direction: column; }
+.unidade-foto { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid var(--border-soft); }
+.unidade-corpo { padding: 24px 24px 22px; display: flex; flex-direction: column; flex: 1; }
+.unidade-corpo .badge { align-self: flex-start; margin-bottom: 12px; }
+.unidade-corpo h3 { font-size: 1.35rem; line-height: 1.2; margin-bottom: 10px; }
+.unidade-corpo p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 6px; }
+.unidade-corpo p:last-of-type { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text); }
+.unidade-corpo .card-link { margin-top: auto; padding-top: 14px; min-height: 44px; }
+
+/* ===== Rodapé: redes ===== */
+.footer-brand + p + .footer-redes-titulo { margin-top: 24px; }
+.footer-grid ul.footer-redes { display: flex; gap: 8px; flex-wrap: wrap; }
+.footer-grid ul.footer-redes li { margin-bottom: 0; }
+.footer-redes a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid var(--border-soft); border-radius: var(--radius-sm); }
+.footer-redes a:hover { border-color: var(--orange); }
+.footer-redes a:focus-visible { outline: 3px solid var(--orange-deep); outline-offset: 2px; }
+.footer-redes img { width: 24px; height: 24px; display: block; }

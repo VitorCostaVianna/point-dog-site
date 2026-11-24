@@ -179,5 +179,20 @@ for (const page of ['index.html', 'servicos.html']) {
 }
 for (const page of pages) if (/petlove/i.test(readFileSync(join(root, page), 'utf8').replace(/<span class="plan-badge">[\s\S]*?<\/span>/g, '')) && page !== 'index.html' && page !== 'servicos.html') errors.push(`${page}: menciona PetLove fora das páginas previstas`);
 
+// Redes no rodapé de todas as páginas e cards de unidade da Home (spec unidades-cards-e-redes.md)
+const redesRodape = { instagram: 'https://www.instagram.com/pointdogpet/', facebook: 'https://www.facebook.com/pointdogpet', tiktok: 'https://www.tiktok.com/@pointdogpet', linktree: 'https://linktr.ee/pointdogpetshop' };
+for (const [rede, href] of Object.entries(redesRodape)) if (!existsSync(join(root, 'assets/icons', rede + '.svg'))) errors.push(`ícone ausente: assets/icons/${rede}.svg`);
+for (const page of pages) {
+  const rod = (readFileSync(join(root, page), 'utf8').match(/<footer[\s\S]*?<\/footer>/) || [''])[0];
+  for (const [rede, href] of Object.entries(redesRodape)) {
+    const a = [...rod.matchAll(/<a\s[^>]*>/g)].map(m => m[0]).find(t => t.includes(`href="${href}"`));
+    if (!a) errors.push(`${page}: rodapé sem link de ${rede} (${href})`);
+    else if (!/rel="noopener"/.test(a) || !/target="_blank"/.test(a)) errors.push(`${page}: link de ${rede} no rodapé sem target="_blank" rel="noopener"`);
+  }
+}
+const cardsUn = [...idx.matchAll(/<div class="card unidade[^"]*">([\s\S]*?)<\/div>\s*<\/div>/g)].map(m => m[1]);
+const hrefsUn = cardsUn.map(c => (c.match(/class="card-link" href="([^"]*)"/) || [])[1]);
+if (JSON.stringify(hrefsUn) !== JSON.stringify(['contato.html#horto', 'contato.html#pitangui', 'contato.html#sao-roque', 'contato.html#formosa'])) errors.push('index.html: cards de unidade devem apontar para contato.html#horto, #pitangui, #sao-roque, #formosa; achei ' + JSON.stringify(hrefsUn));
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

@@ -8,7 +8,8 @@
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   function start() {
-    if (!window.gsap || !window.ScrollTrigger || video.dataset.started) return;
+    if (video.dataset.started) return;
+    if (!window.gsap || !window.ScrollTrigger) return fallback();
     video.dataset.started = "1";
     const { gsap, ScrollTrigger } = window;
     gsap.registerPlugin(ScrollTrigger);
@@ -26,6 +27,7 @@
   }
 
   function fallback() {
+    document.documentElement.classList.remove("scrub-js");
     section.classList.remove("is-scrub");
     const n = section.nextElementSibling;
     if (n) n.classList.remove("scrub-curtain");

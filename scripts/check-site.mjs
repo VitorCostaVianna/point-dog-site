@@ -267,6 +267,9 @@ for (const id of ['pitangui', 'sao-roque', 'formosa']) {
     const ogt = (html.match(/<meta property="og:title" content="([^"]*)"/) || [])[1];
     const ogd = (html.match(/<meta property="og:description" content="([^"]*)"/) || [])[1];
     if (title === undefined || desc === undefined) { errors.push(`${page}: sem title ou description`); continue; }
+    if (!title.trim() || !desc.trim()) { errors.push(`${page}: title ou description vazio`); continue; }
+    // Só &amp; é aceito como entidade; outras (&atilde;, &#227;, &nbsp;) escapariam das checagens de texto: escreva o caractere direto
+    if (/&(?!amp;)/.test(title + desc) || /&amp;amp;/.test(title + desc)) errors.push(`${page}: title/description com entidade HTML além de &amp; (escreva o caractere direto)`);
     meta[page] = { title: decodifica(title), desc: decodifica(desc) };
     if (meta[page].title.length > 62) errors.push(`${page}: title com ${meta[page].title.length} caracteres (máx. 62)`);
     if (meta[page].desc.length > 160) errors.push(`${page}: description com ${meta[page].desc.length} caracteres (máx. 160)`);

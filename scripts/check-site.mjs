@@ -141,6 +141,15 @@ for (const page of pages) {
   }
   if (/<img[^>]*logo-pointdog[^>]*alt="Point Dog"/.test(html)) errors.push(`${page}: logo com alt="Point Dog" ao lado do texto "Point Dog"; use alt=""`);
 }
+// Sem cara de IA: sem emoji nem ✔ no HTML, sem frases sem base, sem verde nos selos
+const semEmoji = /[\u{1F300}-\u{1FAFF}\u{2714}\u{2764}]/u;
+for (const page of pages) {
+  const html = readFileSync(join(root, page), 'utf8');
+  if (semEmoji.test(html)) errors.push(`${page}: emoji/✔ no HTML (use CSS ou texto)`);
+  if (/n[ií]vel hospitalar/i.test(html)) errors.push(`${page}: "nível hospitalar" não tem base; reescreva com fatos`);
+}
+const cssTxt = readFileSync(join(root, 'css/style.css'), 'utf8');
+if (/\.(badge|plan-badge)[^{]*\{[^}]*(var\(--green|rgba\(30, ?158)/.test(cssTxt)) errors.push('css: selo (.badge/.plan-badge) não pode usar verde');
 
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

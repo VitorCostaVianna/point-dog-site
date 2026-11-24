@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function(){var c=navigator.connection||{};if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&!c.saveData&&!/(^|-)2g$/.test(c.effectiveType||""))document.documentElement.classList.add("scrub-js")})()</script>
   <title>Point Dog Pet | Cuidado de verdade para quem você ama</title>
   <meta name="description" content="Banho, tosa, clínica veterinária e pet shop completo. Point Dog: desde 1998 cuidando dos pets de Belo Horizonte.">
   <link rel="canonical" href="https://www.pointdog.com.br/">
@@ -15,9 +16,8 @@
   <meta property="og:url" content="https://www.pointdog.com.br/">
   <meta property="og:image" content="https://www.pointdog.com.br/assets/img/og-pointdog.jpg">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600..800&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" type="image/webp" href="assets/img/logo-pointdog.webp">
   <link rel="apple-touch-icon" href="assets/img/logo-pointdog.webp">
   <link rel="preload" as="image" href="assets/img/scrub-produtos-poster.webp" type="image/webp" fetchpriority="high">
@@ -100,24 +100,18 @@
         </div>
         <div class="grid-3">
           <div class="card reveal">
-            <span class="card-icon-ghost" aria-hidden="true">🛁</span>
-            <div class="card-icon-badge">🛁</div>
             <h3>Banho &amp; Tosa Profissional</h3>
             <span class="plan-badge">Aceitamos plano PetLove</span>
             <p>Estética animal com produtos premium e profissionais carinhosos.</p>
             <a class="card-link" href="servicos.html">Saiba mais →</a>
           </div>
           <div class="card reveal">
-            <span class="card-icon-ghost" aria-hidden="true">🩺</span>
-            <div class="card-icon-badge card-icon-badge--green">🩺</div>
             <h3>Clínica Veterinária</h3>
             <span class="plan-badge">Aceitamos plano PetLove</span>
             <p>Consultas, vacinas e exames com quem entende. Saúde preventiva para garantir a longevidade do seu melhor amigo.</p>
             <a class="card-link" href="servicos.html">Saiba mais →</a>
           </div>
           <div class="card reveal">
-            <span class="card-icon-ghost" aria-hidden="true">🦴</span>
-            <div class="card-icon-badge card-icon-badge--gold">🦴</div>
             <h3>Pet Shop Completo</h3>
             <p>A melhor seleção de produtos da cidade. Rações super premium, farmácia completa, brinquedos importados e acessórios exclusivos.</p>
             <a class="card-link" href="servicos.html">Saiba mais →</a>
@@ -137,8 +131,8 @@
               <p>Com vasta experiência, construímos uma história de confiança e seriedade. Cuidamos de gerações de pets com a mesma dedicação.</p>
             </div>
             <div>
-              <h3 style="font-size: 1.1rem; color: var(--gold);">Higiene Rigorosa</h3>
-              <p>Protocolos sanitários de nível hospitalar. Ambientes climatizados, esterilizados e seguros para garantir a saúde integral do seu amigo.</p>
+              <h3 style="font-size: 1.1rem; color: var(--gold);">Tudo em um endereço</h3>
+              <p>No Horto, a Unidade Completa reúne banho e tosa, clínica veterinária e pet shop. Dá para resolver tudo na mesma ida.</p>
             </div>
             <div>
               <h3 style="font-size: 1.1rem; color: var(--gold);">Produtos Premium</h3>

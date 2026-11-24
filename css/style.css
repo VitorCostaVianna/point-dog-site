@@ -1,3 +1,19 @@
+/* Fontes hospedadas localmente (OFL): só o subconjunto latino, que cobre o português */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("../assets/fonts/bricolage-grotesque-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/figtree-latin.woff2") format("woff2");
+}
+
 /* ===== Design tokens ===== */
 :root {
   --bg: #FFFFFF;
@@ -111,9 +127,9 @@ button { font-family: inherit; cursor: pointer; }
   gap: 8px;
   padding: 7px 16px;
   border-radius: var(--radius-pill);
-  background: rgba(30, 158, 82, 0.08);
-  border: 1px solid rgba(30, 158, 82, 0.35);
-  color: var(--green-glow);
+  background: rgba(242, 118, 43, 0.10);
+  border: 1px solid rgba(242, 118, 43, 0.45);
+  color: var(--orange-deep);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 500;
@@ -159,32 +175,6 @@ button { font-family: inherit; cursor: pointer; }
   color: var(--orange-deep);
 }
 
-/* Icon + oversized ghost icon (service cards) */
-.card-icon-badge {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: rgba(242, 118, 43, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  margin-bottom: 18px;
-  position: relative;
-  z-index: 2;
-}
-.card-icon-badge--gold { background: rgba(168, 114, 15, 0.12); }
-.card-icon-badge--green { background: rgba(34, 26, 20, 0.07); }
-.card-icon-ghost {
-  position: absolute;
-  top: -18px;
-  right: -18px;
-  font-size: 6.5rem;
-  line-height: 1;
-  opacity: 0.07;
-  z-index: 1;
-  pointer-events: none;
-}
 
 /* ===== Header ===== */
 .site-header {
@@ -450,7 +440,19 @@ button { font-family: inherit; cursor: pointer; }
   font-size: 0.85rem;
   font-weight: 600;
 }
-.plan-badge::before { content: "✔"; }
+.plan-badge::before,
+.check::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 10px;
+  margin: -3px 3px 0 1px;
+  border: solid currentColor;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.check { display: flex; align-items: center; gap: 8px; }
+.check::before { color: var(--orange-deep); }
 
 /* ===== Hero com vídeo controlado pela rolagem (scrub) =====
    Vídeo de fundo (sangria total) + texto por cima. Plano B = hero estático (poster).
@@ -505,13 +507,14 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* Selo do hero com contraste >= 4,5:1 sobre o véu */
-.scrub .badge { color: #0B5F37; background: rgba(255,255,255,.7); }
+.scrub .badge { color: var(--orange-deep); background: rgba(255,255,255,.85); }
 html:has(.scrub.is-scrub) { scroll-behavior: auto; }
 
 /* Celular com hero preso: tira o parágrafo (as frases já cobrem) para tudo caber na tela */
 @media (max-width: 899px) {
-  .scrub.is-scrub .scrub-copy { padding-top: 14px; padding-bottom: 14px; }
-  .scrub.is-scrub .scrub-copy .lead { display: none; }
+  /* Chave em html.scrub-js (definida no <head>, antes da pintura) e não em .is-scrub (adicionada pelo JS depois): evita deslocar os botões quando o scrub liga */
+  html.scrub-js .scrub .scrub-copy { padding-top: 14px; padding-bottom: 14px; }
+  html.scrub-js .scrub .scrub-copy .lead { display: none; }
 }
 
 /* ===== Identidade tipográfica: Bricolage Grotesque (títulos) + Figtree (texto) ===== */

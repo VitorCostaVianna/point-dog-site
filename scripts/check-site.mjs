@@ -179,5 +179,66 @@ for (const page of ['index.html', 'servicos.html']) {
 }
 for (const page of pages) if (/petlove/i.test(readFileSync(join(root, page), 'utf8').replace(/<span class="plan-badge">[\s\S]*?<\/span>/g, '')) && page !== 'index.html' && page !== 'servicos.html') errors.push(`${page}: menciona PetLove fora das páginas previstas`);
 
+// Redes no rodapé de todas as páginas e cards de unidade da Home (spec unidades-cards-e-redes.md)
+const redesRodape = { instagram: 'https://www.instagram.com/pointdogpet/', facebook: 'https://www.facebook.com/pointdogpet', tiktok: 'https://www.tiktok.com/@pointdogpet', linktree: 'https://linktr.ee/pointdogpetshop' };
+for (const [rede, href] of Object.entries(redesRodape)) if (!existsSync(join(root, 'assets/icons', rede + '.svg'))) errors.push(`ícone ausente: assets/icons/${rede}.svg`);
+for (const page of pages) {
+  const rod = (readFileSync(join(root, page), 'utf8').match(/<footer[\s\S]*?<\/footer>/) || [''])[0];
+  for (const [rede, href] of Object.entries(redesRodape)) {
+    const a = [...rod.matchAll(/<a\s[^>]*>/g)].map(m => m[0]).find(t => t.includes(`href="${href}"`));
+    if (!a) errors.push(`${page}: rodapé sem link de ${rede} (${href})`);
+    else {
+      if (!/rel="noopener"/.test(a) || !/target="_blank"/.test(a)) errors.push(`${page}: link de ${rede} no rodapé sem target="_blank" rel="noopener"`);
+      if (!/aria-label="[^"]+"/.test(a)) errors.push(`${page}: link de ${rede} no rodapé sem aria-label`);
+      const li = rod.slice(rod.indexOf(a)).match(/^<a\s[^>]*>\s*(<img[^>]*>)/);
+      const prefixo = page === '404.html' ? '/' : '';
+      if (!li) errors.push(`${page}: link de ${rede} no rodapé sem <img> do ícone`);
+      else {
+        if (!/\salt=""/.test(li[1])) errors.push(`${page}: ícone de ${rede} no rodapé deve ter alt=""`);
+        if (!li[1].includes(`src="${prefixo}assets/icons/${rede}.svg"`)) errors.push(`${page}: ícone de ${rede} deve usar src="${prefixo}assets/icons/${rede}.svg" (${page === '404.html' ? 'caminho absoluto' : 'caminho relativo'})`);
+      }
+    }
+  }
+}
+// Cards de unidade da Home: parse por card (do marcador até o próximo card ou o fim da seção), valores exatos
+const unEsperadas = [
+  { id: 'horto', nome: 'Unidade Horto', end: 'R. Dona Nancy de Vasconcelos Gomes, 336 - Horto, Belo Horizonte - MG', fecha: '18:00', etiqueta: true },
+  { id: 'pitangui', nome: 'Unidade Pitangui', end: 'R. Pitangui, 3003 - Sagrada Família, BH', fecha: '19:00' },
+  { id: 'sao-roque', nome: 'Unidade São Roque', end: 'R. São Roque, 1231-A - Sagrada Família, BH', fecha: '19:00' },
+  { id: 'formosa', nome: 'Unidade Formosa', end: 'R. Formosa, 113A - Santa Tereza, BH', fecha: '18:00' },
+];
+{
+  const ini = idx.indexOf('class="grid-unidades"');
+  const fim = idx.indexOf('</section>', ini);
+  const partes = ini < 0 ? [] : idx.slice(ini, fim).split(/<div class="card unidade\b[^>]*>/).slice(1);
+  if (partes.length !== unEsperadas.length) errors.push(`index.html: esperados ${unEsperadas.length} cards de unidade, achei ${partes.length}`);
+  unEsperadas.forEach((u, i) => {
+    const c = partes[i] || '';
+    const txt = tag => (c.match(new RegExp(`<${tag}[^>]*>([^<]*)</${tag}>`)) || [])[1];
+    const ps = [...c.matchAll(/<p[^>]*>([^<]*)<\/p>/g)].map(m => m[1].trim());
+    if ((txt('h3') || '').trim() !== u.nome) errors.push(`index.html: card ${u.id}: nome esperado "${u.nome}"`);
+    if (ps[0] !== u.end) errors.push(`index.html: card ${u.id}: endereço esperado "${u.end}", achei "${ps[0]}"`);
+    if (ps[1] !== `Fecha às ${u.fecha}`) errors.push(`index.html: card ${u.id}: esperado "Fecha às ${u.fecha}", achei "${ps[1]}"`);
+    if (!new RegExp(`class="card-link" href="contato[.]html#${u.id}"`).test(c)) errors.push(`index.html: card ${u.id}: link de ação deve apontar para contato.html#${u.id}`);
+    if (/Unidade Completa/.test(c) !== !!u.etiqueta) errors.push(`index.html: card ${u.id}: etiqueta "Unidade Completa" ${u.etiqueta ? 'ausente' : 'não deveria estar aqui'} (só no Horto)`);
+    const img = (c.match(/<img\s[^>]*class="unidade-foto"[^>]*>/) || [])[0];
+    if (!img) errors.push(`index.html: card ${u.id}: falta <img class="unidade-foto">`);
+    else {
+      if (c.indexOf(img) > c.indexOf('<div class="unidade-corpo"')) errors.push(`index.html: card ${u.id}: foto deve vir antes do corpo`);
+      for (const at of ['width', 'height']) if (!new RegExp(`[ ]${at}="[0-9]+"`).test(img)) errors.push(`index.html: card ${u.id}: foto sem ${at}`);
+      if (!/loading="lazy"/.test(img)) errors.push(`index.html: card ${u.id}: foto sem loading="lazy"`);
+      if (!/\salt="[^"]+"/.test(img)) errors.push(`index.html: card ${u.id}: foto sem alt descritivo`);
+      const src = (img.match(/\ssrc="([^"]+)"/) || [])[1];
+      if (!src || !existsSync(join(root, src))) errors.push(`index.html: card ${u.id}: foto src inexistente (${src})`);
+    }
+  });
+}
+
+// JSON-LD da Home: sameAs com as 4 redes do rodapé
+for (const url of ['https://www.instagram.com/pointdogpet/', 'https://www.facebook.com/pointdogpet', 'https://www.tiktok.com/@pointdogpet', 'https://linktr.ee/pointdogpetshop']) {
+  const org = ldNos(ldTodos['index.html']).find(n => n['@id'] === 'https://www.pointdog.com.br/#org');
+  if (!org || !(org.sameAs || []).includes(url)) errors.push('index.html: JSON-LD Organization sem sameAs ' + url);
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);

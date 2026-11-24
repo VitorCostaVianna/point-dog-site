@@ -267,7 +267,7 @@ button { font-family: inherit; cursor: pointer; }
   gap: 48px;
   margin-bottom: 48px;
 }
-.footer-grid h4 {
+.footer-grid h3 {
   color: var(--gold);
   font-family: var(--font-mono);
   font-size: 0.85rem;

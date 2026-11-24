@@ -39,7 +39,7 @@ Velocidade não é o objetivo. Nada de implementar direto a partir de um pedido 
 ## O que importa para o cliente (conferir em toda mudança)
 - Quem chega quer **falar no WhatsApp** (Agendar banho/vet, Pedir produtos): CTA claro e rápido, texto da mensagem certo para cada serviço.
 - **Informação correta por unidade:** endereço, horário de fechamento e telefone das 4 unidades (Horto, Pitangui, São Roque, Formosa) e qual serviço cada uma oferece (Horto é a "Unidade Completa").
-- **Aceita plano PetLove** em banho e vet. **Desde 1998.** Não escrever "26 anos".
+- **Aceita plano PetLove só na clínica veterinária** (não em banho e tosa; decisão do dono, 2026-11-24). **Desde 1998.** Não escrever "26 anos".
 - Avaliações reais do Google, indicando a unidade. Hoje há depoimentos de exemplo; trocar por reais antes de divulgar.
 - Funcionar bem no celular, carregar rápido, aparecer no Google (SEO local).
 

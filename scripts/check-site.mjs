@@ -256,5 +256,39 @@ for (const id of ['pitangui', 'sao-roque', 'formosa']) {
   if (!aria.includes('Pedir produtos')) errors.push(`index.html: card ${id}: aria-label deve conter "Pedir produtos" (achei "${aria}")`);
 }
 
+// Títulos e descrições (spec seo-titulos.md): únicos, dentro do limite, og iguais, sem superlativo, sem serviço atribuído às unidades não confirmadas
+{
+  const meta = {};
+  const decodifica = s => s.replace(/&amp;/g, '&');
+  for (const page of pages.filter(p => p !== '404.html')) {
+    const html = readFileSync(join(root, page), 'utf8');
+    const title = (html.match(/<title>([^<]*)<\/title>/) || [])[1];
+    const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+    const ogt = (html.match(/<meta property="og:title" content="([^"]*)"/) || [])[1];
+    const ogd = (html.match(/<meta property="og:description" content="([^"]*)"/) || [])[1];
+    if (title === undefined || desc === undefined) { errors.push(`${page}: sem title ou description`); continue; }
+    if (!title.trim() || !desc.trim()) { errors.push(`${page}: title ou description vazio`); continue; }
+    // Só &amp; é aceito como entidade; outras (&atilde;, &#227;, &nbsp;) escapariam das checagens de texto: escreva o caractere direto
+    if (/&(?!amp;)/.test(title + desc) || /&amp;amp;/.test(title + desc)) errors.push(`${page}: title/description com entidade HTML além de &amp; (escreva o caractere direto)`);
+    meta[page] = { title: decodifica(title), desc: decodifica(desc) };
+    if (meta[page].title.length > 62) errors.push(`${page}: title com ${meta[page].title.length} caracteres (máx. 62)`);
+    if (meta[page].desc.length > 160) errors.push(`${page}: description com ${meta[page].desc.length} caracteres (máx. 160)`);
+    if (ogt !== title) errors.push(`${page}: og:title diferente do title`);
+    if (ogd !== desc) errors.push(`${page}: og:description diferente da description`);
+    const texto = (meta[page].title + ' ' + meta[page].desc).toLowerCase();
+    for (const termo of ['melhor', 'nº 1', 'n° 1', 'excelência', 'premium']) {
+      if (texto.includes(termo)) errors.push(`${page}: title/description contém "${termo}"`);
+    }
+    if (page !== 'contato.html' && /pitangui|s[aã]o roque|formosa/.test(texto)) errors.push(`${page}: title/description cita Pitangui, São Roque ou Formosa (serviços dessas unidades não confirmados)`);
+  }
+  for (const campo of ['title', 'desc']) {
+    const vistos = new Map();
+    for (const [page, m] of Object.entries(meta)) {
+      if (vistos.has(m[campo])) errors.push(`${page}: ${campo === 'title' ? 'title' : 'description'} igual ao de ${vistos.get(m[campo])}`);
+      else vistos.set(m[campo], page);
+    }
+  }
+}
+
 if (errors.length) { console.error('✖ Falhas:\n' + errors.map(e => ' - ' + e).join('\n')); process.exit(1); }
 console.log(`✔ ${pages.length} páginas validadas`);
